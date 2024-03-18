@@ -1,127 +1,145 @@
 <template>
-<div>
-<div class="nav-menu"> 
-<i 
-class="fas fa-bars" 
-@click="showMenu()"> 
-</i> 
-<div
-class="nav-content"
-:class="this.showMobileMenu ? 'open-menu' : 'closed-menu'"
-> 
-<!-- <div class="nav-logo"><img src="https://f005.backblazeb2.com/file/verbabble/icononly_transparent.png" alt="Logo"></div> -->
-<ul class="nav-items">
-<li><router-link to="/">Home</router-link></li>
-<li><router-link to="/about">About</router-link></li>
-<li><router-link to="/staff">Staff</router-link></li>
-<li><router-link to="/join">Join</router-link></li>
-<li><a href="https://webchat.verbabble.com">Chat</a></li>
-</ul>
-</div>
-</div>
-</div>
+  <nav class="navbar" :class="{ 'navbar-transparent': isTransparent }">
+    <div class="navbar-container">
+      <div class="navbar-items" :class="{ 'navbar-items-mobile': isMobileMenuOpen }">
+        <ul>
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/about">About</router-link></li>
+          <li><router-link to="/staff">Staff</router-link></li>
+          <li><router-link to="/join">Join</router-link></li>
+          <li><a href="https://webchat.verbabble.com/" target="_blank">Chat</a></li>
+        </ul>
+      </div>
+      <div class="navbar-mobile-toggle" @click="toggleMobileMenu">
+        <i class="fa fa-bars"></i>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
 export default {
-data() {
-return {
-showMobileMenu: false,
-};
-},
-methods: {
-showMenu() {
-this.showMobileMenu = !this.showMobileMenu;
-},
-},
+  data() {
+    return {
+      isMobileMenuOpen: false,
+    };
+  },
+  computed: {
+    isTransparent() {
+      // Check if the viewport width is less than the mobile breakpoint
+      return window.innerWidth < 768;
+    }
+  },
+  methods: {
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-.nav-menu {
-background-color: rgba(200, 200, 200, 0.7);
-}
-.nav-content {
-display: flex;
-justify-content: center;
-padding: 10px 30px;
-align-items: center;
-position: absolute;
-width: 100%;
-z-index: 1;
-}
-.nav-content .nav-logo {
-  display: flex;  /* Enables margin: 0 auto */
+<style scoped>
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
   align-items: center;
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;  /* Optional margin for spacing */
-  flex-grow: 0;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 999;
 }
-.nav-items {
-display: flex;
-justify-content: center;
-align-items: center;
-list-style: none;
-margin: 0;
-padding: 0;
-li {
-padding: 0 10px;
+
+.navbar-transparent {
+  background-color: transparent;
 }
-router-link {
-color: rgba(59, 0, 64, 255);
-font-weight: bold;
-text-decoration: none;
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
 }
-a {
-color: rgba(59, 0, 64, 255);
-font-weight: bold;
-text-decoration: none;
+
+.navbar-items {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Updated: Center the menu items */
 }
-router-link:hover {
-text-decoration: underline;
+
+.navbar-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
-a:hover {
-text-decoration: underline;
+
+.navbar-items li {
+  margin-right: 20px;
 }
+
+.navbar-items a {
+  color: rgba(59, 0, 64, 255);
+  font-weight: bold;
+  text-decoration: none;
 }
-i {
-display: none;
+
+.navbar-items a:hover {
+  text-decoration: underline;
 }
-@media screen and (max-width: 768px) {
-.nav-menu {
-padding-top: 10px;
-position: absolute;
-width: 100%;
+
+.navbar-mobile-toggle {
+  display: none;
+  cursor: pointer;
+  margin-left: auto; /* Updated: Move the hamburger menu icon to the right */
 }
-.open-menu {
-opacity: 1;
-height: 150px;
-}
-.closed-menu {
-opacity: 0;
-height: 0;
-padding: 0;
-}
-.nav-content {
-flex-direction: column;
-z-index: 100;
-position: relative;
-transition: all 0.2s ease-out;
-}
-.nav-items {
-flex-direction: column;
-}
-i {
-display: block;
-text-align: right;
-padding: 0 10px 10px 0;
-}
-}
-@media screen and (min-width: 769px) {
-.nav-content {
-background-color: rgba(200, 200, 200, 0.7);
-}
+
+@media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    z-index: 999;
+  }
+  .navbar-items {
+    display: none;
+  }
+
+  .navbar-items-mobile {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    z-index: 998;
+  }
+
+  .navbar-items-mobile ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .navbar-items-mobile li {
+    margin-bottom: 10px;
+  }
+
+  .navbar-mobile-toggle {
+    display: block;
+  }
 }
 </style>
-
