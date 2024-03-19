@@ -5,7 +5,7 @@
         <ul>
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/about">About</router-link></li>
-          <li><router-link to="/staff">Staff</router-link></li>
+          <li><router-link to="/support">Support</router-link></li>
           <li><router-link to="/join">Join</router-link></li>
           <li><a href="https://webchat.verbabble.com/" target="_blank">Chat</a></li>
         </ul>
